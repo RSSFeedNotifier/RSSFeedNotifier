@@ -4,19 +4,23 @@
 #
 #-------------------------------------------------
 
-QT       += xml\
-        network
+QT += core \
+      widgets \
+      network \
+      gui \
 
 
-QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 TARGET = rss
+
 TEMPLATE = app
 
+SOURCES += main.cpp \
+           mainwindow.cpp \
+           rssparser.cpp
 
-SOURCES += main.cpp\
-        mainwindow.cpp
-
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+            rssparser.h
 
 FORMS    += mainwindow.ui

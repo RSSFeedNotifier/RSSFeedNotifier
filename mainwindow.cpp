@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "rssparser.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass)
 {
     ui->setupUi(this);
 
 }
-
 
 MainWindow::~MainWindow() {
     delete ui;
@@ -46,16 +47,8 @@ void MainWindow::replyFinished(QNetworkReply *reply) {
 }
 
 void MainWindow::parseXML() {
-    qDebug() << "parse the XML now :v!";
-    qDebug() << xml.readNext();
-//    while(!xml.atEnd()) {
-//        xml.readNext();
-//        // do processing
-//        qDebug() << xml.readNext();
-//    }
-//    if (xml.hasError()) {
-//        // do error handling
-//    }
+
+    RSSParser::parseDocument( &xml );
 
 }
 
