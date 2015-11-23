@@ -48,7 +48,7 @@ void MainWindow::replyFinished(QNetworkReply *reply) {
 
 void MainWindow::parseXML() {
 
-    RSSParser::RSSChannel *channel = RSSParser::parseDocument( &xml );
+    RSSParser::RSSChannel *channel = new RSSParser::RSSChannel( &xml );
     qDebug() << channel->items.size();
     channel->print();
 

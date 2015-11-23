@@ -57,11 +57,11 @@ RSS_CHANNEL_ATTR_LIST
 #undef ATTR_ITEM
             ...
         );
+        RSSChannel( QXmlStreamReader *xml );
         void add( RSSFeedItem *item );
         void print();
     };
 
-    RSSChannel *parseDocument( QXmlStreamReader *xml );
 
 }
 

@@ -67,24 +67,9 @@ RSS_CHANNEL_ATTR_LIST
 #undef ATTR_ITEM
     }
 
-    void RSSChannel::add( RSSFeedItem *item )
-    {
-        items.push_back( item );
-    }
-
-    void RSSChannel::print()
-    {
-        qDebug() << title;
-        for( RSSFeedItem *item : items )
-        {
-            item->print();
-        }
-    }
-
-    RSSChannel *parseDocument( QXmlStreamReader *xml )
+    RSSChannel::RSSChannel( QXmlStreamReader *xml )
     {
 
-        RSSChannel *channel = NULL;
         RSSFeedItem *item = NULL;
 
         enum ParseState {
@@ -131,7 +116,7 @@ RSS_CHANNEL_ATTR_LIST
                 {
                     if( "channel" == xml->name() )
                     {
-                        channel = new RSSChannel();
+                        RSSChannel();
                         state = STATE_CHANNEL;
                     }
                     break;
@@ -141,7 +126,7 @@ RSS_CHANNEL_ATTR_LIST
 #define ATTR_ITEM( nname ) \
                     if( #nname == xml->name() ) \
                     { \
-                        channel->nname = xml->readElementText(); \
+                        nname = xml->readElementText(); \
                     } \
                     else
 RSS_CHANNEL_ATTR_LIST
@@ -149,7 +134,7 @@ RSS_CHANNEL_ATTR_LIST
                     if( "item" == xml->name() )
                     {
                         item = new RSSFeedItem();
-                        channel->add( item );
+                        add( item );
                         state = STATE_ITEM;
                     }
                     else
@@ -223,9 +208,19 @@ RSS_FEED_ITEM_ATTR_LIST
         if (xml->hasError()) {
             // do error handling
         }
-
-        return( channel );
-
     }
 
+    void RSSChannel::add( RSSFeedItem *item )
+    {
+        items.push_back( item );
+    }
+
+    void RSSChannel::print()
+    {
+        qDebug() << title;
+        for( RSSFeedItem *item : items )
+        {
+            item->print();
+        }
+    }
 }
