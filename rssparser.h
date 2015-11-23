@@ -3,48 +3,63 @@
 
 #include <vector>
 
+#include <QString>
+
+#define RSS_CHANNEL_ATTR_LIST \
+    ATTR_ITEM( title ) \
+    ATTR_ITEM( link ) \
+    ATTR_ITEM( description ) \
+    ATTR_ITEM( language )
+
+#define RSS_FEED_ITEM_ATTR_LIST \
+    ATTR_ITEM( title ) \
+    ATTR_ITEM( link ) \
+    ATTR_ITEM( description ) \
+    ATTR_ITEM( pubDate ) \
+    ATTR_ITEM( guid ) \
+    ATTR_ITEM( date )
+
 namespace RSSParser
 {
     class RSSFeedItem
     {
-    private:
-      const char *title;
-      const char *link;
-      const char *description;
-      const char *pubDate;
-      const char *guid;
-      const char *date;
-
     public:
+#define ATTR_ITEM( name ) \
+      QString name;
+RSS_FEED_ITEM_ATTR_LIST
+#undef ATTR_ITEM
+    public:
+      RSSFeedItem();
       RSSFeedItem(
-        const char *title,
-        const char *link,
-        const char *description,
-        const char *pubDate,
-        const char *guid,
-        const char *date
+#define ATTR_ITEM( name ) \
+      QString name,
+RSS_FEED_ITEM_ATTR_LIST
+#undef ATTR_ITEM
+        ...
       );
       void print();
     };
 
     class RSSChannel
     {
-    private:
-        const char *title;
-        const char *link;
-        const char *description;
-        const char *language;
-        std::vector<RSSFeedItem> items;
     public:
+#define ATTR_ITEM( name ) \
+      QString name;
+RSS_CHANNEL_ATTR_LIST
+#undef ATTR_ITEM
+        std::vector<RSSFeedItem *> items;
+    public:
+        RSSChannel();
         RSSChannel(
-            const char *title,
-            const char *link,
-            const char *description,
-            const char *language
+#define ATTR_ITEM( name ) \
+      QString name,
+RSS_CHANNEL_ATTR_LIST
+#undef ATTR_ITEM
+            ...
         );
+        void add( RSSFeedItem *item );
         void print();
     };
-
 
     RSSChannel *parseDocument( QXmlStreamReader *xml );
 
