@@ -16,6 +16,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::fetch() {
+    xml.clear();
     // Set up network manager
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyFinished(QNetworkReply*)));
@@ -65,6 +66,7 @@ void MainWindow::addTreeRoot(QString name, RSSParser::RSSChannel *channel) {
     for( RSSParser::RSSFeedItem *item : channel->items ) {
         addTreeChild(treeItem, item->title, "link");
     }
+    delete channel;
 
 }
 
