@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>176</height>
+    <width>530</width>
+    <height>278</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>505</width>
+    <width>530</width>
     <height>100</height>
    </size>
   </property>
@@ -29,16 +29,10 @@
    <layout class="QGridLayout" name="gridLayout_2"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
    <property name="minimumSize">
     <size>
      <width>500</width>
-     <height>100</height>
+     <height>167</height>
     </size>
    </property>
    <property name="features">
@@ -66,6 +60,15 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QTreeWidget" name="treeWidget">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
      </item>
     </layout>
    </widget>
