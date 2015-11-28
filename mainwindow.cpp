@@ -50,7 +50,6 @@ void MainWindow::replyFinished(QNetworkReply *reply) {
 }
 
 void MainWindow::parseXML() {
-    qDebug() << "parseXML()";
     RSSParser::RSSChannel *channel = new RSSParser::RSSChannel( &xml );
     qDebug() << channel->title;
 
@@ -64,19 +63,33 @@ void MainWindow::addTreeRoot(QString name, RSSParser::RSSChannel *channel) {
 
     //add the feed items
     for( RSSParser::RSSFeedItem *item : channel->items ) {
-        addTreeChild(treeItem, item->title, "link");
+        addTreeChild(treeItem, item);
     }
     delete channel;
 
 }
 
-void MainWindow::addTreeChild(QTreeWidgetItem *parent, QString name, QString desc) {
+void MainWindow::addTreeChild(QTreeWidgetItem *parent, RSSParser::RSSFeedItem *item) {
     QTreeWidgetItem *treeItem = new QTreeWidgetItem();
 
-    treeItem->setText(0,name);
-    treeItem->setText(1, desc);
+    treeItem->setText(0,item->title);
+    treeItem->setText(1, item->link);
 
     parent->addChild(treeItem);
 
 }
+
+void MainWindow::itemActivated(QTreeWidgetItem *item) {
+    ui->webView->load(QUrl(item->text(1)));
+    ui->webView->show();
+}
+
+
+
+
+
+
+
+
+
 

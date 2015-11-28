@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2009-06-04T12:16:46
+# Project created by QtCreator 2015-10-04T12:16:46
 #
 #-------------------------------------------------
 
@@ -8,6 +8,7 @@ QT += core \
       widgets \
       network \
       gui \
+      webkitwidgets\
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
