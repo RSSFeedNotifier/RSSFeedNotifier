@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMenu>
 #include <QXmlStreamReader>
 #include <QtNetwork>
 #include <QDebug>
@@ -26,9 +27,13 @@ public slots:
     void fetch();
     void replyFinished(QNetworkReply *reply);
     void itemActivated(QTreeWidgetItem *item);
+    void onCustomContextMenu(const QPoint &point);
+    void removeFeedClickedSlot();
 
 private:
     Ui::MainWindowClass *ui;
+    QMenu* contextMenu;
+    QAction *removeAction;
 
     void parseXML();
     void addTreeRoot(QString name, RSSParser::RSSChannel *channel);

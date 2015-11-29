@@ -9,6 +9,29 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->treeWidget->setHeaderLabels(QStringList() << "Feed");
 
+    //Right-click menu
+    contextMenu = new QMenu(ui->treeWidget);
+    ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    removeAction = new QAction("Remove", contextMenu);
+    ui->treeWidget->addAction(removeAction);
+    contextMenu->addAction("Remove", this, SLOT(removeFeedClickedSlot()));
+    connect(removeAction, SIGNAL(triggered()), this, SLOT(removeFeedClickedSlot()));
+    connect(ui->treeWidget, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+
+}
+
+void MainWindow::onCustomContextMenu(const QPoint &point)
+{
+    QTreeWidgetItem *item = ui->treeWidget->itemAt(point);
+    // Show menu for top level items (channels)
+    if ( item && !item->parent() ) {
+        contextMenu->exec(ui->treeWidget->mapToGlobal(point));
+    }
+}
+
+void MainWindow::removeFeedClickedSlot()
+{
+    delete ui->treeWidget->currentItem();
 }
 
 MainWindow::~MainWindow() {
@@ -65,6 +88,7 @@ void MainWindow::addTreeRoot(QString name, RSSParser::RSSChannel *channel) {
     for( RSSParser::RSSFeedItem *item : channel->items ) {
         addTreeChild(treeItem, item);
     }
+
     delete channel;
 
 }
