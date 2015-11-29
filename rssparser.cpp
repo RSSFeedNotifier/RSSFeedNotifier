@@ -30,17 +30,20 @@ namespace RSSParser
     /** Representation of a channel item.
     */
     RSSFeedItem::RSSFeedItem(
-#define ATTR_ITEM( name ) \
-      QString name,
-RSS_FEED_ITEM_ATTR_LIST
-#undef ATTR_ITEM
-        ...
+        QString title,
+        QString link,
+        QString description,
+        QString pubDate,
+        QString guid,
+        QString date
     )
     {
-#define ATTR_ITEM( name ) \
-      this->name = name;
-RSS_FEED_ITEM_ATTR_LIST
-#undef ATTR_ITEM
+      this->title = title;
+      this->link = link;
+      this->description = description;
+      this->pubDate = pubDate;
+      this->guid = guid;
+      this->date = date;
     }
 
     void RSSFeedItem::print()
@@ -54,17 +57,16 @@ RSS_FEED_ITEM_ATTR_LIST
     }
 
     RSSChannel::RSSChannel(
-#define ATTR_ITEM( name ) \
-      QString name,
-RSS_CHANNEL_ATTR_LIST
-#undef ATTR_ITEM
-        ...
+      QString title,
+      QString link,
+      QString description,
+      QString language
     )
     {
-#define ATTR_ITEM( name ) \
-      this->name = name;
-RSS_CHANNEL_ATTR_LIST
-#undef ATTR_ITEM
+      this->title = title;
+      this->link = link;
+      this->description = description;
+      this->language = language;
     }
 
     RSSChannel::RSSChannel( QXmlStreamReader *xml )
@@ -123,15 +125,12 @@ RSS_CHANNEL_ATTR_LIST
                 }
                 case STATE_CHANNEL:
                 {
-#define ATTR_ITEM( nname ) \
-                    if( #nname == xml->name() ) \
-                    { \
-                        nname = xml->readElementText(); \
-                    } \
-                    else
-RSS_CHANNEL_ATTR_LIST
-#undef ATTR_ITEM
-                    if( "item" == xml->name() )
+                    if( "title" == xml->name() ) { title = xml->readElementText(); }
+                    else if( "link" == xml->name() ) { link = xml->readElementText(); }
+                    else if( "description" == xml->name() ) { description = xml->readElementText(); }
+                    else if( "language" == xml->name() ) { language = xml->readElementText(); }
+
+                    else if( "item" == xml->name() )
                     {
                         item = new RSSFeedItem();
                         add( item );
@@ -145,17 +144,12 @@ RSS_CHANNEL_ATTR_LIST
                 }
                 case STATE_ITEM:
                 {
-#define ATTR_ITEM( nname ) \
-                    if( #nname == xml->name() ) \
-                    { \
-                        item->nname = xml->readElementText(); \
-                    } \
-                    else
-RSS_FEED_ITEM_ATTR_LIST
-#undef ATTR_ITEM
-                    {
-
-                    }
+                    if( "title" == xml->name() ) { item->title = xml->readElementText(); }
+                    else if( "link" == xml->name() ) { item->link = xml->readElementText(); }
+                    else if( "description" == xml->name() ) { item->description = xml->readElementText(); }
+                    else if( "pubDate" == xml->name() ) { item->pubDate = xml->readElementText(); }
+                    else if( "guid" == xml->name() ) { item->guid = xml->readElementText(); }
+                    else if( "date" == xml->name() ) { item->date = xml->readElementText(); }
                     break;
                 }
                 case STATE_OTHER:
