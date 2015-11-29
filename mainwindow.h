@@ -6,6 +6,8 @@
 #include <QtNetwork>
 #include <QDebug>
 #include <QNetworkAccessManager>
+#include <QTreeWidget>
+#include <rssparser.h>
 
 namespace Ui
 {
@@ -23,11 +25,15 @@ public:
 public slots:
     void fetch();
     void replyFinished(QNetworkReply *reply);
+    void itemActivated(QTreeWidgetItem *item);
 
 private:
     Ui::MainWindowClass *ui;
 
     void parseXML();
+    void addTreeRoot(QString name, RSSParser::RSSChannel *channel);
+    void addTreeChild(QTreeWidgetItem *parent, RSSParser::RSSFeedItem *item);
+
 
     QXmlStreamReader xml;
     QNetworkAccessManager *manager;

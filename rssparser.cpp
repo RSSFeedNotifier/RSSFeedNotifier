@@ -87,19 +87,19 @@ RSS_CHANNEL_ATTR_LIST
             switch( state )
             {
                 case STATE_CHANNEL:
-                    qDebug() << "RSS" << xml->name();
+//                    qDebug() << "RSS" << xml->name();
                 break;
                 case STATE_ITEM:
-                    qDebug() << "ITEM" << xml->name();
+//                    qDebug() << "ITEM" << xml->name();
                 break;
                 case STATE_OTHER:
-                    qDebug() << "OTHER" << xml->name();
+//                    qDebug() << "OTHER" << xml->name();
                 break;
                 case STATE_START:
-                    qDebug() << "START" << xml->name();
+//                    qDebug() << "START" << xml->name();
                 break;
                 case STATE_END:
-                    qDebug() << "END" << xml->name();
+//                    qDebug() << "END" << xml->name();
                 break;
             default:
                 break;
@@ -217,10 +217,10 @@ RSS_FEED_ITEM_ATTR_LIST
 
     void RSSChannel::print()
     {
-        qDebug() << title;
+//        qDebug() << title;
         for( RSSFeedItem *item : items )
         {
-            item->print();
+//            item->print();
         }
     }
 }

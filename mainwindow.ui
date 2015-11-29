@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>176</height>
+    <width>1109</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>505</width>
+    <width>530</width>
     <height>100</height>
    </size>
   </property>
@@ -26,52 +26,62 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2"/>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget_2">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>500</width>
-     <height>100</height>
-    </size>
-   </property>
-   <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="text">
-          <string>http://www.cbc.ca/cmlink/rss-topstories</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Get feed</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="text">
+       <string>http://www.cbc.ca/cmlink/rss-topstories</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Get feed</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" rowspan="2" colspan="2">
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>0</height>
+       </size>
+      </property>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="0" column="2" rowspan="3">
+     <widget class="QWebView" name="webView">
+      <property name="url">
+       <url>
+        <string>about:blank</string>
+       </url>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -90,8 +100,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeWidget</sender>
+   <signal>itemActivated(QTreeWidgetItem*,int)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>itemActivated(QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>261</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fetch()</slot>
+  <slot>itemActivated(QTreeWidgetItem*)</slot>
  </slots>
 </ui>

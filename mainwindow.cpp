@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass)
 {
     ui->setupUi(this);
+    ui->treeWidget->setHeaderLabels(QStringList() << "Feed");
 
 }
 
@@ -15,6 +16,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::fetch() {
+    xml.clear();
     // Set up network manager
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyFinished(QNetworkReply*)));
@@ -44,14 +46,50 @@ void MainWindow::replyFinished(QNetworkReply *reply) {
         parseXML();
 
     }
+    reply->deleteLater();
 }
 
 void MainWindow::parseXML() {
-
     RSSParser::RSSChannel *channel = new RSSParser::RSSChannel( &xml );
-    qDebug() << channel->items.size();
-    channel->print();
+    qDebug() << channel->title;
+
+    addTreeRoot(channel->title, channel);
+}
+
+void MainWindow::addTreeRoot(QString name, RSSParser::RSSChannel *channel) {
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->treeWidget);
+    //add the root
+    treeItem->setText(0,name);
+
+    //add the feed items
+    for( RSSParser::RSSFeedItem *item : channel->items ) {
+        addTreeChild(treeItem, item);
+    }
+    delete channel;
 
 }
+
+void MainWindow::addTreeChild(QTreeWidgetItem *parent, RSSParser::RSSFeedItem *item) {
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+
+    treeItem->setText(0,item->title);
+    treeItem->setText(1, item->link);
+
+    parent->addChild(treeItem);
+
+}
+
+void MainWindow::itemActivated(QTreeWidgetItem *item) {
+    ui->webView->load(QUrl(item->text(1)));
+    ui->webView->show();
+}
+
+
+
+
+
+
+
+
 
 
